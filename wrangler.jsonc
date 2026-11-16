@@ -1,0 +1,13 @@
+{
+  "name": "minna-chat",
+  "main": "worker.js",
+  "compatibility_date": "2025-01-01",
+  "ai": { "binding": "AI" },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "chat-db",
+      "database_id": "71826ac1-d34c-44d0-8aea-e84da627f1e1"
+    }
+  ]
+}
