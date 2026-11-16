@@ -2,7 +2,7 @@
 // 必要な設定: D1 を変数名 DB、Workers AI を変数名 AI でバインドする。
 // 利用者の識別: ブラウザが作る ID(uid)を localStorage に保存して使う。
 
-const MODEL = "@cf/meta/llama-3.1-8b-instruct";
+const MODEL = "@cf/meta/llama-3.1-8b-instruct-fp8";
 const SYSTEM = "あなたは親切で丁寧なAIアシスタントです。特に指定がなければ日本語で答えてください。";
 const ID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const MAX_MESSAGE = 2000;
@@ -236,7 +236,8 @@ export default {
           messages: [{ role: "system", content: SYSTEM }, ...history],
           max_tokens: 1024,
         });
-        reply = String((out && out.response) || "").trim();
+        const choice = out && out.choices && out.choices[0] && out.choices[0].message;
+        reply = String((out && out.response) || (choice && choice.content) || "").trim();
       } catch (err) {
         return json({ error: "AIの呼び出しに失敗しました: " + String((err && err.message) || err).slice(0, 300) }, 502);
       }
