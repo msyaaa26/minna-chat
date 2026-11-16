@@ -238,7 +238,7 @@ export default {
         });
         reply = String((out && out.response) || "").trim();
       } catch (err) {
-        return json({ error: "AIの呼び出しに失敗しました。少し待ってからもう一度お試しください。" }, 502);
+        return json({ error: "AIの呼び出しに失敗しました: " + String((err && err.message) || err).slice(0, 300) }, 502);
       }
       if (!reply) return json({ error: "AIから返事がありませんでした。" }, 502);
 
